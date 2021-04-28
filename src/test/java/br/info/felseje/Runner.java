@@ -14,11 +14,11 @@ import io.cucumber.junit.CucumberOptions;
         plugin = {
                 "pretty",
                 "json:target/cucumber.json",
-                "br.info.felseje.config.listeners.TestListener"
+//                "br.info.felseje.config.listeners.TestListener"
         },
         features = "src/test/resources/features",
         snippets = CucumberOptions.SnippetType.CAMELCASE,
-        tags = ""
+        tags = "@"
 )
 public class Runner {
 

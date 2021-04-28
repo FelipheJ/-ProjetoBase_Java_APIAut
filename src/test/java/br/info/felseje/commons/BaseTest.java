@@ -1,15 +1,12 @@
 package br.info.felseje.commons;
 
-import io.restassured.RestAssured;
+import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
 public class BaseTest {
 
-    protected static RequestSpecification requestSpecification;
-    protected static ResponseSpecification responseSpecification;
-
-    public void veriod() {
-    }
-
+    protected static RequestSpecification reqSpec;
+    protected static ResponseSpecification resSpec;
+    protected static ValidatableResponse validatableResponse;
 }
