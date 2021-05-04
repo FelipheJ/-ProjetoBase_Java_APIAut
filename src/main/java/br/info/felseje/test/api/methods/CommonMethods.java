@@ -1,9 +1,9 @@
-package br.info.felseje.api.methods;
+package br.info.felseje.test.api.methods;
 
 import java.util.Map;
 import java.util.List;
 import io.cucumber.datatable.DataTable;
-import br.info.felseje.commons.BaseTest;
+import br.info.felseje.test.commons.BaseTest;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -30,22 +30,30 @@ public class CommonMethods extends BaseTest {
         reqSpec = requestSpecBuilder.build();
     }
 
-    public void facoUmaRequisicaoAoRecurso(String verbo, String recurso) {
-        switch (verbo) {
+    public void fazerRequisicao(DataTable dataTable) {
+        String httpMethod, resource, body;
+        Map<String, String> map = dataTable.asMaps().size() > 0 ?  dataTable.asMaps().get(0) : null;
+        if (map == null) throw new IllegalArgumentException("DataTable.asMaps() does not have any elements.");
+        body = map.get("body");
+        resource = map.get("resource");
+        httpMethod = map.get("httpMethod");
+        switch (httpMethod) {
             case "GET":
-                validatableResponse = given().spec(reqSpec).when().get(recurso).then().spec(resSpec);
+                validatableResponse = given().spec(reqSpec).when().get(resource).then().spec(resSpec);
                 break;
             case "POST":
-                validatableResponse = given().spec(reqSpec).when().post(recurso).then().spec(resSpec);
+                if (body == null || body.isEmpty()) throw new IllegalArgumentException("The body is null or empty.");
+                validatableResponse = given().spec(reqSpec).body(body).when().post(resource).then().spec(resSpec);
                 break;
             case "PUT":
-                validatableResponse = given().spec(reqSpec).when().put(recurso).then().spec(resSpec);
+                if (body == null || body.isEmpty()) throw new IllegalArgumentException("The body is null or empty.");
+                validatableResponse = given().spec(reqSpec).body(body).when().put(resource).then().spec(resSpec);
                 break;
             case "DELETE":
-                validatableResponse = given().spec(reqSpec).when().delete(recurso).then().spec(resSpec);
+                validatableResponse = given().spec(reqSpec).when().delete(resource).then().spec(resSpec);
                 break;
             default:
-                throw new IllegalArgumentException("Unrecognized httpMethod: " + verbo);
+                throw new IllegalArgumentException("Unrecognized httpMethod: " + httpMethod);
         }
     }
 
@@ -72,33 +80,6 @@ public class CommonMethods extends BaseTest {
                         throw new IllegalArgumentException("Type not recognized.");
                 }
             }
-        }
-    }
-
-    public void fazerRequisicao(DataTable dataTable) {
-        String httpMethod, resource, body;
-        Map<String, String> map = dataTable.asMaps().size() > 0 ?  dataTable.asMaps().get(0) : null;
-        if (map == null) throw new IllegalArgumentException("DataTable.asMaps() does not have any elements.");
-        body = map.get("body");
-        resource = map.get("resource");
-        httpMethod = map.get("httpMethod");
-        switch (httpMethod) {
-            case "GET":
-                validatableResponse = given().spec(reqSpec).when().get(resource).then().spec(resSpec);
-                break;
-            case "POST":
-                if (body == null || body.isEmpty()) throw new IllegalArgumentException("The body is null or empty.");
-                validatableResponse = given().spec(reqSpec).body(body).when().post(resource).then().spec(resSpec);
-                break;
-            case "PUT":
-                if (body == null || body.isEmpty()) throw new IllegalArgumentException("The body is null or empty.");
-                validatableResponse = given().spec(reqSpec).body(body).when().put(resource).then().spec(resSpec);
-                break;
-            case "DELETE":
-                validatableResponse = given().spec(reqSpec).when().delete(resource).then().spec(resSpec);
-                break;
-            default:
-                throw new IllegalArgumentException("Unrecognized httpMethod: " + httpMethod);
         }
     }
 

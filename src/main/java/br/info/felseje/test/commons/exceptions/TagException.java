@@ -1,4 +1,4 @@
-package br.info.felseje.exceptions;
+package br.info.felseje.test.commons.exceptions;
 
 public class TagException extends RuntimeException {
 

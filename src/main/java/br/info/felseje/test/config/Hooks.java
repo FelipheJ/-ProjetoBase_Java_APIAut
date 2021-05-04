@@ -1,13 +1,13 @@
-package br.info.felseje.config;
+package br.info.felseje.test.config;
 
 import java.util.ArrayList;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
-import br.info.felseje.commons.BaseTest;
 import io.restassured.filter.log.LogDetail;
-import br.info.felseje.exceptions.TagException;
+import br.info.felseje.test.commons.BaseTest;
 import io.restassured.builder.ResponseSpecBuilder;
+import br.info.felseje.test.commons.exceptions.TagException;
 
 public class Hooks extends BaseTest {
 

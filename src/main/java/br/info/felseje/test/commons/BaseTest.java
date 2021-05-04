@@ -1,4 +1,4 @@
-package br.info.felseje.commons;
+package br.info.felseje.test.commons;
 
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
